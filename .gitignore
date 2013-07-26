@@ -1,0 +1,12 @@
+.bundle
+db/*.sqlite3
+log/*.log
+tmp/
+*.swp
+.sass-cache/
+*.*~
+*~
+*.swp
+*.swo
+*.swn
+.elasticbeanstalk/
