@@ -2,9 +2,8 @@ require 'nokogiri'
 require 'ostruct'
 
 module Responses
-	class Query
-		attr_accessor :body
-		attr_reader :hits
+	class Query < Response
+		attr_reader :hits, :response, :number_of_hits, :total_hits
 
 		def initialize
 			@hits = []
@@ -13,6 +12,10 @@ module Responses
 		def parse
 			doc = Nokogiri::HTML(body)
 			parse_hits(doc)
+			@response = doc.css('response').text
+			@number_of_hits = doc.css('numhits').text.to_i
+			@total_hits = doc.css('totalhits').text.to_i
+			super
 		end
 
 		private 

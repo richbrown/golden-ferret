@@ -3,13 +3,25 @@ require 'spec_helper'
 describe Responses::Query do	
 	before :each do
 		@query = Responses::Query.new
-	end
-
-	it "parses the XML defined" do
 		@query.body = fakes_ml
 		@query.parse
+	end
+
+	it "builds hits from the XML defined" do
 		@query.hits.count.should eql 6
 		@query.hits[0][:title].should eql "Alistair Burt MP visits the School of Government and Society"
+	end
+
+	it "parses the response" do
+		@query.response.should eql "SUCCESS"
+	end
+	
+	it "parses the number of hits" do
+		@query.number_of_hits.should eql 6
+	end
+
+	it "parses the total number of hits" do
+		@query.total_hits.should eql 465
 	end
 
 	def fakes_ml
@@ -18,6 +30,9 @@ describe Responses::Query do
 	<response>SUCCESS</response>
 	<responsedata>
 	<autn:numhits>6</autn:numhits>
+	<autn:totalhits>465</autn:totalhits>
+	<autn:totaldbdocs>46802</autn:totaldbdocs>
+	<autn:totaldbsecs>83017</autn:totaldbsecs>
 	<autn:qmsstate>0</autn:qmsstate>
 	<autn:hit>
 	<autn:reference>
